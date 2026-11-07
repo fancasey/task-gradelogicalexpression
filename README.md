@@ -6,7 +6,7 @@ for a parseable wrong answer, shows a counterexample and proposes a repair. A
 deterministic verifier checks both the assessment and the repair.
 
 The five scenarios, reference answers, and five student submissions in
-[`examples/synthetic-exam.json`](examples/synthetic-exam.json) were synthesized
+[`src/plugin/synthetic-exam.json`](src/plugin/synthetic-exam.json) were synthesized
 for this project. They contain no real student work.
 
 ## Tools
@@ -83,7 +83,7 @@ minimal repair negates `R`, then adds `AND D` to `F`, yielding
 | `nanoagent.yaml`, `contract.py` | Plugin manifest and typed tool and task contracts |
 | `src/plugin/` | MCP server and tool implementations |
 | `verifier/` | Exam reader, expression rules, and deterministic verification |
-| `examples/synthetic-exam.json` | Synthetic questions, references, and submissions |
+| `src/plugin/synthetic-exam.json` | Synthetic questions, references, and submissions |
 | `product/`, `ui/` | Catalog metadata and question and student picker |
 | `tests/` | Exam, verifier, MCP, and NanoAgent task integration tests |
 

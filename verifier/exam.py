@@ -5,7 +5,7 @@ from pathlib import Path
 
 from contract import ExamOutput, Question, QuestionId, StudentId, SubmissionOutput
 
-EXAM = Path(__file__).resolve().parents[1] / "examples" / "synthetic-exam.json"
+EXAM = Path(__file__).resolve().parents[1] / "src" / "plugin" / "synthetic-exam.json"
 
 
 def load_exam():

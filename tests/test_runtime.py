@@ -6,7 +6,7 @@ import pytest
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from slimconfig import plain_output
-from test_grading import make_report
+from test_verifier import make_report
 
 from contract import QuestionId, SelectionInput, StudentId
 

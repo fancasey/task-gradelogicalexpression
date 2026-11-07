@@ -15,6 +15,9 @@ dev = ["pytest", "ruff"]
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+plugin = ["synthetic-exam.json"]
+
 [tool.uv.sources]
 slimconfig = { git = "https://github.com/zeyuyang8/slimconfig", branch = "master" }
 
