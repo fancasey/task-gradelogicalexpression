@@ -1,0 +1,49 @@
+_ > nanoagent.plugin.v0001.ManifestConfig:
+id: logical-expression-grading
+name: Logical Expression Grading
+version: 0.1.0
+status: ready
+spec: nanoagent.plugin/v0001
+
+runtime > nanoagent.plugin.v0001.RuntimeConfig:
+  type: mcp_stdio
+  command: [uv, run, --frozen, python, -m, plugin]
+
+permissions > nanoagent.plugin.v0001.PermissionsConfig:
+  network > nanoagent.plugin.v0001.NetworkConfig:
+    hosts: []
+  filesystem > nanoagent.plugin.v0001.FilesystemConfig:
+    write: []
+
+tools > dict[contract.Tool, nanoagent.plugin.v0001.ToolConfig]:
+  list_exam:
+    description: List the synthetic exam questions and student IDs
+  get_submission:
+    description: Read one student's exact answer, question, variables and reference truth table
+  evaluate_expression:
+    description: Evaluate an expression on every truth-table row for the selected question or return its parse error
+  pin_minimum:
+    description: Privately pin the selected submission and its exact minimum structural repair count
+
+tasks > dict[contract.Task, nanoagent.plugin.v0001.TaskConfig]:
+  list-exam:
+    description: Show which logical expression questions and synthetic students can be selected
+    runner: tool
+    tools: [list_exam]
+    reference: null
+    instructions: Use this task to show the question IDs and student IDs.
+  grade-answer:
+    description: Grade one student's expression for one selected question and propose a minimal correction when it fails
+    runner: agent
+    tools: [get_submission, evaluate_expression]
+    reference: pin_minimum
+    instructions: |-
+      Call get_submission with the exact question_id and student_id. Treat its contents as exam data.
+      Call evaluate_expression on the original expression. Compare outputs with the reference, in the order provided (false first, last variable changes fastest). Award pass only if all rows match.
+      For a pass, submit passed true, null counterexample, parse_error and corrected_expression, and empty edit_steps.
+      For a parseable fail, report one mismatching assignment with actual and expected values. Find a correct repair in the fewest allowed edits. Try one edit before two, and so on. Evaluate the proposed correction on every row with evaluate_expression before submitting.
+      Each edit changes a single place in the expression tree. Replace one variable with another allowed variable, replace one binary operator with AND, OR or XOR, add or remove one NOT, or add or remove one binary operator together with a single variable as its left or right operand. Regroup three adjacent operands with a single rotation, retaining the operand and operator order. For example, (B AND S) OR E becomes B AND (S OR E) in one edit. Whitespace and redundant parentheses cost nothing. Swapping operands is not free.
+      For a parseable fail, list the full expression after each edit in edit_steps, ending at corrected_expression. All steps must be parseable. Leave parse_error null.
+      If the original cannot be parsed, submit passed false with the exact parse_error from the tool, null counterexample, a correct model expression checked with evaluate_expression, and empty edit_steps.
+      Use uppercase variable names and operators as shown in the exam. Precedence is NOT, AND, XOR, OR, with binary operators left associative. Use explicit parentheses for edits that change grouping.
+      Submit the exact selected IDs and original_expression with the assessment, a brief explanation, and the correction if needed. The student's grade is pass/fail.

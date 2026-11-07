@@ -1,0 +1,114 @@
+{
+  "questions": [
+    {
+      "id": "lab-access",
+      "variable_order": ["B", "S", "E"],
+      "prompt": "A lab door unlocks if a badge is valid and the visitor is either staff or escorted. Write an expression that is true exactly when the door unlocks.",
+      "variables": {
+        "B": "The visitor's badge is valid",
+        "S": "The visitor is staff",
+        "E": "The visitor is escorted"
+      },
+      "reference_expression": "B AND (S OR E)",
+      "reference_outputs": [false, false, false, false, false, true, true, true]
+    },
+    {
+      "id": "backup-power",
+      "variable_order": ["M", "R"],
+      "prompt": "A backup generator starts when mains power is unavailable and the generator is ready. Write an expression that is true exactly when it starts.",
+      "variables": {
+        "M": "Mains power is available",
+        "R": "The generator is ready"
+      },
+      "reference_expression": "NOT M AND R",
+      "reference_outputs": [false, true, false, false]
+    },
+    {
+      "id": "relay-warning",
+      "variable_order": ["L", "R"],
+      "prompt": "A warning light comes on when exactly one of two relays is closed. Write an expression that is true exactly when the light comes on.",
+      "variables": {
+        "L": "The left relay is closed",
+        "R": "The right relay is closed"
+      },
+      "reference_expression": "(L OR R) AND NOT (L AND R)",
+      "reference_outputs": [false, true, true, false]
+    },
+    {
+      "id": "garden-watering",
+      "variable_order": ["F", "D", "R"],
+      "prompt": "A garden controller waters if all three conditions hold: the schedule permits watering, the soil is dry, and rain is not forecast. Otherwise it stays off. Write an expression that is true exactly when it waters.",
+      "variables": {
+        "F": "The watering schedule permits watering",
+        "D": "The soil is dry",
+        "R": "Rain is forecast"
+      },
+      "reference_expression": "F AND D AND NOT R",
+      "reference_outputs": [false, false, false, false, false, false, true, false]
+    },
+    {
+      "id": "package-release",
+      "variable_order": ["S", "A", "E"],
+      "prompt": "A warehouse releases a package when it has both a shipping label and approval, or when an emergency override is active. The override works even if the label or approval is missing. Write an expression that is true exactly when the package is released.",
+      "variables": {
+        "S": "The package has a shipping label",
+        "A": "The package has approval",
+        "E": "The emergency override is active"
+      },
+      "reference_expression": "(S AND A) OR E",
+      "reference_outputs": [false, true, false, true, false, true, true, true]
+    }
+  ],
+  "submissions": [
+    {
+      "student_id": "synthetic-01",
+      "answers": {
+        "lab-access": "(B AND S) OR (B AND E)",
+        "backup-power": "R AND NOT M",
+        "relay-warning": "L XOR R",
+        "garden-watering": "NOT R AND (D AND F)",
+        "package-release": "(E OR S) AND (E OR A)"
+      }
+    },
+    {
+      "student_id": "synthetic-02",
+      "answers": {
+        "lab-access": "B AND S OR E",
+        "backup-power": "M AND R",
+        "relay-warning": "L OR R",
+        "garden-watering": "F AND D",
+        "package-release": "S OR A OR E"
+      }
+    },
+    {
+      "student_id": "synthetic-03",
+      "answers": {
+        "lab-access": "B AND (S OR E",
+        "backup-power": "",
+        "relay-warning": "(L AND NOT R) OR (NOT L AND R)",
+        "garden-watering": "NOT (NOT F OR NOT D OR R)",
+        "package-release": "E OR (A AND S)"
+      }
+    },
+    {
+      "student_id": "synthetic-04",
+      "answers": {
+        "lab-access": "(E OR S) AND B",
+        "backup-power": "NOT M AND M",
+        "relay-warning": "(L OR R) AND NOT (L AND R)",
+        "garden-watering": "F AND R",
+        "package-release": "E OR (S AND A)"
+      }
+    },
+    {
+      "student_id": "synthetic-05",
+      "answers": {
+        "lab-access": "B AND (S AND E)",
+        "backup-power": "NOT (M OR NOT R)",
+        "relay-warning": "NOT (L XOR R)",
+        "garden-watering": "(F AND D) AND NOT R",
+        "package-release": "(S AND A) OR (E AND A)"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+_ > nanoagent.plugin.v0001.ProductConfig:
+tagline: "Grade Boolean expressions and find the smallest repair"
+summary: "Select one question and one synthetic student. The agent compares truth tables and explains the result. A verifier checks the assessment and the size of any repair."
+highlights:
+  - "Accepts every expression with the same truth table"
+  - "Shows a counterexample for an incorrect expression"
+  - "Checks repairs against the fewest possible edits"
+steps:
+  - "List the exam questions and student IDs"
+  - "Choose a question and a student to grade"
+  - "Review the grade and any proposed repair"
